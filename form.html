@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Your Profile | LocEssentials Introductions</title>
+  <meta name="description" content="Share your profile and alter ego with the LocEssentials community!">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/">
+          <img src="/assets/images/LocCapTransparentTilted.png" alt="LocEssentials Logo" class="logo">
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/">Meet Our Team</a></li>
+            <li><a href="/form.html">Submit Your Profile</a></li>
+            <li><a href="/game.html">Play Guess Who</a></li>
+            <li><a href="/answer-key.html">Answer Key</a></li>
+          </ul>
+        </nav>
+        <div class="language-toggle">
+          <button class="lang-btn active" onclick="switchFormLanguage('en')">English</button>
+          <button class="lang-btn" onclick="switchFormLanguage('es')">Español</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container" style="max-width: 900px;">
+      <h1 class="text-center" id="form-title">Submit Your Profile</h1>
+      <p class="text-center" id="form-description" style="max-width: 800px; margin: 0 auto var(--spacing-xl);">
+        Share your real-life profile and create an alter ego to join our community! Your information will be used for our "Guess Who" game and team directory.
+      </p>
+
+      <form id="introduction-form" onsubmit="handleSubmit(event)">
+        <!-- Language Selection -->
+        <input type="hidden" id="form-language" name="language" value="en">
+
+        <!-- Privacy Consent -->
+        <div class="form-section">
+          <h2 id="section-privacy">Privacy Settings</h2>
+          <div class="form-section">
+            <div class="toggle-switch">
+              <label class="switch">
+                <input type="checkbox" id="public-consent" name="public_display_consent" checked>
+                <span class="slider"></span>
+              </label>
+              <label for="public-consent" id="label-public-consent">
+                I consent to having my profile displayed publicly on the LocEssentials website after course completion
+              </label>
+            </div>
+            <p style="font-size: 0.9rem; color: #666; margin-top: var(--spacing-xs);" id="privacy-note">
+              During the course, all students will see each other regardless of this setting. This only affects public display after the course ends.
+            </p>
+          </div>
+        </div>
+
+        <!-- Real Life Section -->
+        <div class="form-section">
+          <h2 id="section-real-life">Me in Real Life</h2>
+          
+          <div class="form-group">
+            <label for="full-name" id="label-full-name">Full Name *</label>
+            <input type="text" id="full-name" name="full_name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="preferred-name" id="label-preferred-name">Preferred Name *</label>
+            <input type="text" id="preferred-name" name="preferred_name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="pronunciation" id="label-pronunciation">How to Pronounce My Name (MP3 audio file)</label>
+            <input type="file" id="pronunciation" name="pronunciation_file" accept=".mp3">
+            <p style="font-size: 0.85rem; color: #666; margin-top: var(--spacing-xs);" id="pronunciation-note">
+              Record yourself saying your name using Audacity and save as MP3
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="photo" id="label-photo">A Picture of Me *</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+          </div>
+
+          <div class="form-group">
+            <label for="photo-alt" id="label-photo-alt">Alt Text for Your Image *</label>
+            <input type="text" id="photo-alt" name="photo_alt" required>
+            <p style="font-size: 0.85rem; color: #666; margin-top: var(--spacing-xs);" id="photo-alt-note">
+              Write a brief description for accessibility
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="pronouns" id="label-pronouns">My Preferred Pronouns</label>
+            <input type="text" id="pronouns" name="pronouns" placeholder="they/them, she/her, he/him, etc.">
+          </div>
+
+          <div class="form-group">
+            <label for="languages" id="label-languages">The Languages I Speak *</label>
+            <input type="text" id="languages" name="languages_spoken" required placeholder="English, Spanish, etc.">
+          </div>
+
+          <div class="form-group">
+            <label for="social-media" id="label-social-media">Connect With Me (Social Media Links)</label>
+            <input type="url" id="social-media" name="social_media" placeholder="https://linkedin.com/in/yourname">
+          </div>
+
+          <div class="form-group">
+            <label for="role" id="label-role">My Role *</label>
+            <input type="text" id="role" name="role" required>
+          </div>
+
+          <div class="form-group">
+            <label for="organization" id="label-organization">The Organization Where I Work</label>
+            <input type="text" id="organization" name="organization">
+          </div>
+
+          <div class="form-group">
+            <label for="about" id="label-about">About Me *</label>
+            <textarea id="about" name="about" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="previous-experience" id="label-prev-exp">My Previous Experience in Translation and Localization</label>
+            <textarea id="previous-experience" name="previous_experience"></textarea>
+          </div>
+        </div>
+
+        <!-- Course Information -->
+        <div class="form-section">
+          <h2 id="section-course">Course Information</h2>
+          
+          <div class="form-group">
+            <label for="course" id="label-course">The Course I'm Enrolled In *</label>
+            <select id="course" name="course" required>
+              <option value="">Select a course...</option>
+              <option value="Loc101: Introduction to Localization">Loc101: Introduction to Localization</option>
+              <option value="Loc101: Introducción a la localización">Loc101: Introducción a la localización</option>
+              <option value="Loc501: Terminology for Beginners">Loc501: Terminology for Beginners</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="enrollment-reason" id="label-enrollment">I Enrolled in This Course Because...</label>
+            <textarea id="enrollment-reason" name="enrollment_reason"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="learning-goals" id="label-goals">What I Want to Learn in This Course Is...</label>
+            <textarea id="learning-goals" name="learning_goals"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="section" id="label-section">Section Assignment (Leave blank - will be assigned)</label>
+            <input type="text" id="section" name="section" readonly style="background: var(--alabaster);">
+          </div>
+
+          <div class="form-group">
+            <label for="section" id="label-section">Class Assignment (Leave blank - will be assigned)</label>
+            <select id="section" name="section" required>
+              <option value="">Select section...</option>
+              <option value="2025-1">2025-1</option>
+              <option value="2024-1">2024-1</option>
+              <option value="2023-1">2023-1</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="team" id="label-team">Team Assignment (Leave blank - will be assigned)</label>
+            <input type="text" id="team" name="team" readonly style="background: var(--alabaster);">
+          </div>
+        </div>
+
+        <!-- Alter Ego Section -->
+        <div class="form-section">
+          <h2 id="section-alter-ego">My Alter Ego</h2>
+          <p id="alter-ego-description" style="color: #666; margin-bottom: var(--spacing-lg);">
+            Think of your alter ego as a stage character or hidden identity. You could be a superhero, a super villain, or anyone in between!
+          </p>
+
+          <div class="form-group">
+            <label for="alter-ego-name" id="label-alter-name">My Alter Ego's Name *</label>
+            <input type="text" id="alter-ego-name" name="alter_ego_name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="alter-ego-photo" id="label-alter-photo">A Picture of My Alter Ego *</label>
+            <input type="file" id="alter-ego-photo" name="alter_ego_photo" accept="image/*" required>
+          </div>
+
+          <div class="form-group">
+            <label for="alter-ego-photo-credits" id="label-alter-credits">Picture Credits *</label>
+            <input type="text" id="alter-ego-photo-credits" name="alter_ego_photo_credits" required>
+            <p style="font-size: 0.85rem; color: #666; margin-top: var(--spacing-xs);" id="credits-note">
+              Provide information about where you got this image
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="alter-ego-photo-alt" id="label-alter-alt">Alt Text for Your Alter Ego Picture *</label>
+            <input type="text" id="alter-ego-photo-alt" name="alter_ego_photo_alt" required>
+          </div>
+
+          <div class="form-group">
+            <label for="alter-ego-job-title" id="label-alter-job">Job Title *</label>
+            <input type="text" id="alter-ego-job-title" name="alter_ego_job_title" required>
+          </div>
+
+          <div class="form-group">
+            <label for="alter-ego-organization" id="label-alter-org">Organization</label>
+            <input type="text" id="alter-ego-organization" name="alter_ego_organization">
+          </div>
+
+          <div class="form-group">
+            <label for="alter-ego-about" id="label-alter-about">About My Alter Ego *</label>
+            <textarea id="alter-ego-about" name="alter_ego_about" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="subject-fields" id="label-subject-fields">The Subject Fields That Interest Me</label>
+            <textarea id="subject-fields" name="subject_fields"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="hobbies" id="label-hobbies">Interests and Hobbies Outside of Work</label>
+            <textarea id="hobbies" name="hobbies"></textarea>
+          </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="form-section">
+          <h2 id="section-additional">Anything Else?</h2>
+          
+          <div class="form-group">
+            <label for="anything-else" id="label-anything-else">Is There Anything Else You'd Like to Share?</label>
+            <textarea id="anything-else" name="anything_else"></textarea>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" style="font-size: 1.1rem; padding: var(--spacing-md) var(--spacing-xl);" id="submit-button">
+            Submit My Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: var(--spacing-xl) 0; color: #999;">
+    <p>&copy; 2025 LocEssentials. All rights reserved.</p>
+  </footer>
+
+  <script src="/assets/js/form-translations.js"></script>
+  <script>
+    function switchFormLanguage(lang) {
+      document.getElementById('form-language').value = lang;
+      
+      // Update button states
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Apply translations
+      applyTranslations(lang);
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      // In production, this would send data to a GitHub API or server endpoint
+      // For now, show a success message
+      alert('Thank you for submitting your profile! Your instructor will review and add it to the site.');
+      
+      // Here you would normally:
+      // 1. Collect form data
+      // 2. Upload files to /assets/images and /assets/audio
+      // 3. Create JSON entry
+      // 4. Update students.json via GitHub API
+      // 5. Create pull request for review
+      
+      console.log('Form data:', new FormData(event.target));
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>

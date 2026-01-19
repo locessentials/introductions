@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet Our Team | LocEssentials Introductions</title>
+  <meta name="description" content="Meet the amazing students and professionals who have taken LocEssentials courses in localization and translation.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/">
+          <img src="/assets/images/LocCapTransparentTilted.png" alt="LocEssentials Logo" class="logo">
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/">Meet Our Team</a></li>
+            <li><a href="/form.html">Submit Your Profile</a></li>
+            <li><a href="/game.html">Play Guess Who</a></li>
+            <li><a href="/answer-key.html">Answer Key</a></li>
+          </ul>
+        </nav>
+        <div class="language-toggle">
+          <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+          <button class="lang-btn" onclick="switchLanguage('es')">Español</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container-wide">
+      <h1 class="text-center">Meet Our Team</h1>
+      <p class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-xl);">
+        Discover the amazing people who have taken LocEssentials courses. Get to know their real-life personas and their creative alter egos!
+      </p>
+
+      <!-- Filters Section -->
+      <section class="filters">
+        <div class="filter-group">
+          <h3>Type of Introduction</h3>
+          <div class="filter-options">
+            <div class="filter-tag active" data-filter="type" data-value="all" onclick="toggleViewType('all')">
+              <span>All Introductions</span>
+              <span class="filter-count">0</span>
+            </div>
+            <div class="filter-tag" data-filter="type" data-value="real-life" onclick="toggleViewType('real-life')">
+              <span>Us in Real Life</span>
+              <span class="filter-count">0</span>
+            </div>
+            <div class="filter-tag" data-filter="type" data-value="alter-ego" onclick="toggleViewType('alter-ego')">
+              <span>Our Alter Egos</span>
+              <span class="filter-count">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Course</h3>
+          <div class="filter-options" id="course-filters">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Section</h3>
+          <div class="filter-options" id="section-filters">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="filter-group hidden" id="team-filter-group">
+          <h3>Team</h3>
+          <div class="filter-options" id="team-filters">
+            <!-- Dynamically populated if teams exist -->
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Language</h3>
+          <div class="filter-options">
+            <div class="filter-tag" data-filter="language" data-value="en" onclick="toggleFilter('language', 'en')">
+              <span>English</span>
+              <span class="filter-count">0</span>
+            </div>
+            <div class="filter-tag" data-filter="language" data-value="es" onclick="toggleFilter('language', 'es')">
+              <span>Español</span>
+              <span class="filter-count">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: var(--spacing-md);">
+          <button class="btn btn-outline" onclick="clearFilters()">Clear All Filters</button>
+        </div>
+      </section>
+
+      <!-- Cards Grid -->
+      <section class="cards-grid" id="cards-container">
+        <div class="loading">
+          <p>Loading profiles...</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: var(--spacing-xl) 0; color: #999;">
+    <p>&copy; 2025 LocEssentials. All rights reserved.</p>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script>
+    function switchLanguage(lang) {
+      // Update button states
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // For now, this updates the filter to show only selected language
+      // In future, this could redirect to /en/ or /es/ subdirectories
+      activeFilters.language = lang;
+      renderCards();
+    }
+  </script>
+</body>
+</html>

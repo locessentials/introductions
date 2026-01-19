@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{STUDENT_NAME}} | LocEssentials Profile</title>
+  <meta name="description" content="Meet {{STUDENT_NAME}} and their alter ego {{ALTER_EGO_NAME}} from the LocEssentials community.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <style>
+    .profile-hero {
+      background: linear-gradient(135deg, var(--pink) 0%, var(--light-blue) 100%);
+      padding: var(--spacing-xl) 0;
+      margin-bottom: var(--spacing-xl);
+      color: white;
+    }
+    
+    .profile-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .profile-section {
+      background: white;
+      padding: var(--spacing-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    
+    .profile-image-container {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .profile-image {
+      width: 100%;
+      max-width: 400px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    
+    .profile-detail {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .profile-detail h3 {
+      font-size: 1rem;
+      color: var(--medium-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .profile-detail p {
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .profile-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/">
+          <img src="/assets/images/LocCapTransparentTilted.png" alt="LocEssentials Logo" class="logo">
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/">Meet Our Team</a></li>
+            <li><a href="/form.html">Submit Your Profile</a></li>
+            <li><a href="/game.html">Play Guess Who</a></li>
+            <li><a href="/answer-key.html">Answer Key</a></li>
+          </ul>
+        </nav>
+        <div class="language-toggle">
+          <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+          <button class="lang-btn" onclick="switchLanguage('es')">Español</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-hero">
+    <div class="container text-center">
+      <h1>{{STUDENT_NAME}}</h1>
+      <p style="font-size: 1.2rem; opacity: 0.9;">{{ROLE}} at {{ORGANIZATION}}</p>
+      <div class="card-meta" style="justify-content: center; margin-top: var(--spacing-md);">
+        <span class="meta-tag course">{{COURSE}}</span>
+        <span class="meta-tag section">{{SECTION}}</span>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      <div class="profile-content">
+        <!-- Real Life Section -->
+        <div class="profile-section">
+          <h2 style="color: var(--dark-blue); margin-bottom: var(--spacing-lg);">In Real Life</h2>
+          
+          <div class="profile-image-container">
+            <img src="{{PHOTO}}" alt="{{PHOTO_ALT}}" class="profile-image">
+          </div>
+
+          <div class="profile-detail">
+            <h3>Preferred Name</h3>
+            <p>{{PREFERRED_NAME}} ({{PRONOUNS}})</p>
+          </div>
+
+          {{PRONUNCIATION_AUDIO}}
+
+          <div class="profile-detail">
+            <h3>Languages Spoken</h3>
+            <p>{{LANGUAGES}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>About</h3>
+            <p>{{ABOUT}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Previous Experience</h3>
+            <p>{{PREVIOUS_EXPERIENCE}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Why This Course</h3>
+            <p>{{ENROLLMENT_REASON}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Learning Goals</h3>
+            <p>{{LEARNING_GOALS}}</p>
+          </div>
+
+          {{SOCIAL_MEDIA}}
+        </div>
+
+        <!-- Alter Ego Section -->
+        <div class="profile-section">
+          <h2 style="color: var(--dark-blue); margin-bottom: var(--spacing-lg);">Alter Ego</h2>
+          
+          <div class="profile-image-container">
+            <img src="{{ALTER_EGO_PHOTO}}" alt="{{ALTER_EGO_PHOTO_ALT}}" class="profile-image">
+            <p style="font-size: 0.85rem; color: #999; margin-top: var(--spacing-xs);">
+              {{PHOTO_CREDITS}}
+            </p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Name</h3>
+            <p>{{ALTER_EGO_NAME}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Role</h3>
+            <p>{{ALTER_EGO_JOB}} at {{ALTER_EGO_ORG}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>About</h3>
+            <p>{{ALTER_EGO_ABOUT}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Subject Fields of Interest</h3>
+            <p>{{SUBJECT_FIELDS}}</p>
+          </div>
+
+          <div class="profile-detail">
+            <h3>Hobbies & Interests</h3>
+            <p>{{HOBBIES}}</p>
+          </div>
+        </div>
+      </div>
+
+      {{ANYTHING_ELSE}}
+
+      <div class="text-center" style="margin-bottom: var(--spacing-xl);">
+        <a href="/" class="btn btn-primary">Back to Directory</a>
+        <a href="/game.html" class="btn btn-secondary">Play Guess Who</a>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: var(--spacing-xl) 0; color: #999;">
+    <p>&copy; 2025 LocEssentials. All rights reserved.</p>
+  </footer>
+</body>
+</html>

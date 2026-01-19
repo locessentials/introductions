@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Key | LocEssentials Introductions</title>
+  <meta name="description" content="See all the matches between real-life personas and their alter egos.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <style>
+    .answer-pair {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+    
+    .answer-column {
+      text-align: center;
+    }
+    
+    .answer-column img {
+      width: 100%;
+      max-width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .answer-column h3 {
+      margin-bottom: var(--spacing-xs);
+      color: var(--dark-blue);
+    }
+    
+    .answer-column .role {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .answer-column .bio {
+      text-align: left;
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    .divider {
+      width: 2px;
+      background: linear-gradient(to bottom, var(--pink), var(--light-blue));
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 768px) {
+      .answer-pair {
+        grid-template-columns: 1fr;
+      }
+      
+      .divider {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/">
+          <img src="/assets/images/LocCapTransparentTilted.png" alt="LocEssentials Logo" class="logo">
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/">Meet Our Team</a></li>
+            <li><a href="/form.html">Submit Your Profile</a></li>
+            <li><a href="/game.html">Play Guess Who</a></li>
+            <li><a href="/answer-key.html">Answer Key</a></li>
+          </ul>
+        </nav>
+        <div class="language-toggle">
+          <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+          <button class="lang-btn" onclick="switchLanguage('es')">Español</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1 class="text-center">Answer Key</h1>
+      <p class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-xl);">
+        Here are all the matches between our real-life personas and their alter egos!
+      </p>
+
+      <!-- Filter Options -->
+      <div style="text-align: center; margin-bottom: var(--spacing-xl);">
+        <label for="answer-course-filter" style="display: inline-block; margin-right: var(--spacing-sm); font-weight: 600;">Filter by Course:</label>
+        <select id="answer-course-filter" onchange="filterAnswers()" style="padding: var(--spacing-xs) var(--spacing-md); border-radius: var(--radius-md); border: 2px solid var(--light-blue);">
+          <option value="all">All Courses</option>
+        </select>
+        
+        <label for="answer-section-filter" style="display: inline-block; margin-left: var(--spacing-lg); margin-right: var(--spacing-sm); font-weight: 600;">Section:</label>
+        <select id="answer-section-filter" onchange="filterAnswers()" style="padding: var(--spacing-xs) var(--spacing-md); border-radius: var(--radius-md); border: 2px solid var(--light-blue);">
+          <option value="all">All Sections</option>
+        </select>
+      </div>
+
+      <!-- Answers Container -->
+      <div id="answers-container">
+        <div class="loading"><p>Loading answers...</p></div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: var(--spacing-xl) 0; color: #999;">
+    <p>&copy; 2025 LocEssentials. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let allStudents = [];
+    let currentFilter = { course: 'all', section: 'all' };
+
+    async function loadAnswers() {
+      try {
+        const response = await fetch('/_data/students.json');
+        const data = await response.json();
+        allStudents = data.students.filter(s => s.public_display_consent);
+        
+        populateFilters();
+        renderAnswers();
+      } catch (error) {
+        console.error('Error loading answers:', error);
+      }
+    }
+
+    function populateFilters() {
+      const courses = [...new Set(allStudents.map(s => s.course))];
+      const sections = [...new Set(allStudents.map(s => s.section))].sort().reverse();
+      
+      const courseSelect = document.getElementById('answer-course-filter');
+      courses.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = course;
+        courseSelect.appendChild(option);
+      });
+
+      const sectionSelect = document.getElementById('answer-section-filter');
+      sections.forEach(section => {
+        const option = document.createElement('option');
+        option.value = section;
+        option.textContent = section;
+        sectionSelect.appendChild(option);
+      });
+    }
+
+    function filterAnswers() {
+      currentFilter.course = document.getElementById('answer-course-filter').value;
+      currentFilter.section = document.getElementById('answer-section-filter').value;
+      renderAnswers();
+    }
+
+    function renderAnswers() {
+      let filtered = allStudents.filter(s => {
+        if (currentFilter.course !== 'all' && s.course !== currentFilter.course) return false;
+        if (currentFilter.section !== 'all' && s.section !== currentFilter.section) return false;
+        return true;
+      });
+
+      const container = document.getElementById('answers-container');
+      
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>No matches found for the selected filters.</p></div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(student => `
+        <div class="answer-pair">
+          <div class="answer-column">
+            <img src="${student.photo}" alt="${student.photo_alt}">
+            <h3>${student.preferred_name}</h3>
+            <p class="role">${student.role} ${student.organization ? `at ${student.organization}` : ''}</p>
+            <div class="card-meta" style="justify-content: center; margin-bottom: var(--spacing-sm);">
+              <span class="meta-tag course">${student.course}</span>
+              <span class="meta-tag section">${student.section}</span>
+            </div>
+            <div class="bio">${student.about}</div>
+            ${student.pronunciation_file ? `
+              <div class="audio-player" style="margin-top: var(--spacing-md);">
+                <audio controls style="width: 100%;">
+                  <source src="${student.pronunciation_file}" type="audio/mpeg">
+                </audio>
+              </div>
+            ` : ''}
+          </div>
+          
+          <div class="answer-column">
+            <img src="${student.alter_ego.photo}" alt="${student.alter_ego.photo_alt}">
+            <h3>${student.alter_ego.name}</h3>
+            <p class="role">${student.alter_ego.job_title} ${student.alter_ego.organization ? `at ${student.alter_ego.organization}` : ''}</p>
+            <div class="bio">${student.alter_ego.about}</div>
+            ${student.alter_ego.hobbies ? `
+              <p style="margin-top: var(--spacing-sm); font-size: 0.9rem; color: #777;">
+                <strong>Hobbies:</strong> ${student.alter_ego.hobbies}
+              </p>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAnswers);
+  </script>
+</body>
+</html>

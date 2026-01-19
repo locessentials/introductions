@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess Who Game | LocEssentials Introductions</title>
+  <meta name="description" content="Play a fun guessing game to match alter egos with their real-life personas!">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/">
+          <img src="/assets/images/LocCapTransparentTilted.png" alt="LocEssentials Logo" class="logo">
+        </a>
+        <nav>
+          <ul>
+            <li><a href="/">Meet Our Team</a></li>
+            <li><a href="/form.html">Submit Your Profile</a></li>
+            <li><a href="/game.html">Play Guess Who</a></li>
+            <li><a href="/answer-key.html">Answer Key</a></li>
+          </ul>
+        </nav>
+        <div class="language-toggle">
+          <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+          <button class="lang-btn" onclick="switchLanguage('es')">Español</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1 class="text-center">Guess Who?</h1>
+      <p class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-xl);">
+        Can you match each alter ego with their real-life persona? Click on a real-life card, then click on the alter ego you think matches. Good luck!
+      </p>
+
+      <!-- Game Instructions -->
+      <div class="game-container">
+        <div style="background: var(--alabaster); padding: var(--spacing-md); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+          <h3>How to Play:</h3>
+          <ol style="padding-left: var(--spacing-lg);">
+            <li>First, click on a "Real Life" card to select a person</li>
+            <li>Then, click on an "Alter Ego" card to make your guess</li>
+            <li>If you're correct, both cards will turn green! ✓</li>
+            <li>If you're wrong, try again!</li>
+            <li>Keep going until all matches are found!</li>
+          </ol>
+        </div>
+
+        <!-- Score Display -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: var(--spacing-lg); font-size: 1.2rem; font-weight: 600;">
+          <div>Matches Found: <span id="score" style="color: var(--neon-green);">0</span> / <span id="total">0</span></div>
+          <button class="btn btn-secondary" onclick="resetGame()">Reset Game</button>
+        </div>
+
+        <!-- Course/Section Filter for Game -->
+        <div style="margin-bottom: var(--spacing-lg);">
+          <label for="game-course-filter" style="display: inline-block; margin-right: var(--spacing-sm);">Filter by Course:</label>
+          <select id="game-course-filter" onchange="filterGame()" style="padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm);">
+            <option value="all">All Courses</option>
+          </select>
+
+          <label for="game-section-filter" style="display: inline-block; margin-left: var(--spacing-lg); margin-right: var(--spacing-sm);">Section:</label>
+          <select id="game-section-filter" onchange="filterGame()" style="padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-sm);">
+            <option value="all">All Sections</option>
+          </select>
+        </div>
+
+        <!-- Game Grid - Real Life -->
+        <h2>Real Life Personas</h2>
+        <div class="game-grid" id="real-life-grid">
+          <div class="loading"><p>Loading game...</p></div>
+        </div>
+
+        <div style="height: var(--spacing-xl);"></div>
+
+        <!-- Game Grid - Alter Egos -->
+        <h2>Alter Egos</h2>
+        <div class="game-grid" id="alter-ego-grid">
+          <div class="loading"><p>Loading game...</p></div>
+        </div>
+      </div>
+
+      <!-- Victory Message -->
+      <div id="victory-message" class="hidden" style="text-align: center; padding: var(--spacing-xl); background: var(--neon-green); border-radius: var(--radius-lg); margin-top: var(--spacing-lg);">
+        <h2 style="color: var(--dark-green); font-size: 2.5rem; margin-bottom: var(--spacing-md);">🎉 Congratulations! 🎉</h2>
+        <p style="font-size: 1.3rem; color: var(--dark-green);">You matched all the alter egos correctly!</p>
+        <button class="btn btn-primary mt-lg" onclick="window.location.href='/answer-key.html'">View Answer Key</button>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: var(--spacing-xl) 0; color: #999;">
+    <p>&copy; 2025 LocEssentials. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let gameStudents = [];
+    let selectedRealLife = null;
+    let selectedAlterEgo = null;
+    let matches = [];
+    let currentFilter = { course: 'all', section: 'all' };
+
+    // Load game data
+    async function loadGame() {
+      try {
+        const response = await fetch('/_data/students.json');
+        const data = await response.json();
+        gameStudents = data.students.filter(s => s.public_display_consent);
+        
+        // Populate filter dropdowns
+        populateFilters();
+        
+        // Shuffle and render
+        filterGame();
+      } catch (error) {
+        console.error('Error loading game:', error);
+      }
+    }
+
+    function populateFilters() {
+      const courses = [...new Set(gameStudents.map(s => s.course))];
+      const sections = [...new Set(gameStudents.map(s => s.section))].sort().reverse();
+      
+      const courseSelect = document.getElementById('game-course-filter');
+      courses.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course;
+        option.textContent = course;
+        courseSelect.appendChild(option);
+      });
+
+      const sectionSelect = document.getElementById('game-section-filter');
+      sections.forEach(section => {
+        const option = document.createElement('option');
+        option.value = section;
+        option.textContent = section;
+        sectionSelect.appendChild(option);
+      });
+    }
+
+    function filterGame() {
+      currentFilter.course = document.getElementById('game-course-filter').value;
+      currentFilter.section = document.getElementById('game-section-filter').value;
+      
+      let filtered = gameStudents.filter(s => {
+        if (currentFilter.course !== 'all' && s.course !== currentFilter.course) return false;
+        if (currentFilter.section !== 'all' && s.section !== currentFilter.section) return false;
+        return true;
+      });
+      
+      renderGame(filtered);
+    }
+
+    function renderGame(students) {
+      // Shuffle students
+      const shuffledReal = [...students].sort(() => Math.random() - 0.5);
+      const shuffledAlter = [...students].sort(() => Math.random() - 0.5);
+      
+      // Reset game state
+      matches = [];
+      selectedRealLife = null;
+      selectedAlterEgo = null;
+      document.getElementById('score').textContent = '0';
+      document.getElementById('total').textContent = students.length;
+      document.getElementById('victory-message').classList.add('hidden');
+      
+      // Render real life cards
+      const realGrid = document.getElementById('real-life-grid');
+      realGrid.innerHTML = shuffledReal.map(s => createGameCard(s, 'real-life')).join('');
+      
+      // Render alter ego cards
+      const alterGrid = document.getElementById('alter-ego-grid');
+      alterGrid.innerHTML = shuffledAlter.map(s => createGameCard(s, 'alter-ego')).join('');
+    }
+
+    function createGameCard(student, type) {
+      const isAlter = type === 'alter-ego';
+      const name = isAlter ? student.alter_ego.name : student.preferred_name;
+      const photo = isAlter ? student.alter_ego.photo : student.photo;
+      const photoAlt = isAlter ? student.alter_ego.photo_alt : student.photo_alt;
+      
+      return `
+        <div class="game-card" data-id="${student.id}" data-type="${type}" onclick="selectCard('${student.id}', '${type}')">
+          <img src="${photo}" alt="${photoAlt}">
+          <h3 style="font-size: 1.1rem; color: var(--dark-blue);">${name}</h3>
+          <p style="font-size: 0.85rem; color: #666;">${isAlter ? 'Alter Ego' : 'Real Life'}</p>
+        </div>
+      `;
+    }
+
+    function selectCard(id, type) {
+      // Check if already matched
+      if (matches.includes(id)) return;
+      
+      if (type === 'real-life') {
+        // Deselect previous if any
+        if (selectedRealLife) {
+          document.querySelector(`[data-id="${selectedRealLife}"][data-type="real-life"]`)?.classList.remove('selected');
+        }
+        selectedRealLife = id;
+        document.querySelector(`[data-id="${id}"][data-type="real-life"]`).classList.add('selected');
+      } else {
+        // Deselect previous if any
+        if (selectedAlterEgo) {
+          document.querySelector(`[data-id="${selectedAlterEgo}"][data-type="alter-ego"]`)?.classList.remove('selected');
+        }
+        selectedAlterEgo = id;
+        document.querySelector(`[data-id="${id}"][data-type="alter-ego"]`).classList.add('selected');
+      }
+      
+      // Check for match if both selected
+      if (selectedRealLife && selectedAlterEgo) {
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      if (selectedRealLife === selectedAlterEgo) {
+        // Correct match!
+        matches.push(selectedRealLife);
+        
+        const realCard = document.querySelector(`[data-id="${selectedRealLife}"][data-type="real-life"]`);
+        const alterCard = document.querySelector(`[data-id="${selectedAlterEgo}"][data-type="alter-ego"]`);
+        
+        realCard.classList.remove('selected');
+        realCard.classList.add('matched');
+        alterCard.classList.remove('selected');
+        alterCard.classList.add('matched');
+        
+        document.getElementById('score').textContent = matches.length;
+        
+        // Check for victory
+        const total = parseInt(document.getElementById('total').textContent);
+        if (matches.length === total) {
+          setTimeout(() => {
+            document.getElementById('victory-message').classList.remove('hidden');
+            document.getElementById('victory-message').scrollIntoView({ behavior: 'smooth' });
+          }, 500);
+        }
+      } else {
+        // Wrong match - shake and reset
+        const realCard = document.querySelector(`[data-id="${selectedRealLife}"][data-type="real-life"]`);
+        const alterCard = document.querySelector(`[data-id="${selectedAlterEgo}"][data-type="alter-ego"]`);
+        
+        // Add error animation (you can enhance this with CSS)
+        realCard.style.animation = 'shake 0.5s';
+        alterCard.style.animation = 'shake 0.5s';
+        
+        setTimeout(() => {
+          realCard.classList.remove('selected');
+          alterCard.classList.remove('selected');
+          realCard.style.animation = '';
+          alterCard.style.animation = '';
+        }, 500);
+      }
+      
+      selectedRealLife = null;
+      selectedAlterEgo = null;
+    }
+
+    function resetGame() {
+      filterGame();
+    }
+
+    // Load game on page load
+    document.addEventListener('DOMContentLoaded', loadGame);
+  </script>
+
+  <style>
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+  </style>
+</body>
+</html>
