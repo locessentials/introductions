@@ -1,0 +1,110 @@
+{
+  "courses": [
+    {
+      "id": "1",
+      "code": "Loc101",
+      "title": "Introduction to Localization",
+      "language": "en",
+      "sections": [
+        "2025-1",
+        "2025-2"
+      ]
+    },
+    {
+      "id": "2",
+      "code": "Loc101",
+      "title": "Introducción a la Localización",
+      "language": "es",
+      "sections": [
+        "2025-1",
+        "2025-2"
+      ]
+    },
+    {
+      "id": "3",
+      "code": "Loc501",
+      "title": "Terminology for Beginners",
+      "language": "en",
+      "sections": [
+        "2025-1",
+        "2025-2"
+      ]
+    },
+    {
+      "id": "4",
+      "code": "Loc300",
+      "title": "Selecting a Translator",
+      "language": "en",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "5",
+      "code": "LocXXX",
+      "title": "Web Localization for Beginners",
+      "language": "en",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "6",
+      "code": "LocXXX",
+      "title": "Localización de videojuegos para principiantes",
+      "language": "es",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "7",
+      "code": "TrnXXX",
+      "title": "Traducción de español al inglés (MX>US)",
+      "language": "es",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "8",
+      "code": "TrnXXX",
+      "title": "Traducción Comercial EN-US>ES-MX",
+      "language": "es",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "9",
+      "code": "Eng301",
+      "title": "Advanced English Practice",
+      "language": "en",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "10",
+      "code": "Eng401",
+      "title": "Business English for the United States",
+      "language": "en",
+      "sections": [
+        "Open enrollment"
+      ]
+    },
+    {
+      "id": "11",
+      "code": "Esp101",
+      "title": "Beginner's Mexican Spanish",
+      "language": "es",
+      "sections": [
+        "Open enrollment"
+      ]
+    }
+  ],
+    "section-translation": {
+        "en": [ "section", "sections" ],
+        "es": [ "sección", "secciones" ]
+    }
+}

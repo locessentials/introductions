@@ -1,0 +1,26 @@
+{
+  "form": {
+    "en": {
+      "index": "Meet the Team",
+      "game": "Play Guess Who",
+      "answers": "Answer Key",
+      "submit-page": "Submit Your Profile",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "copyright-year": "2026",
+      "copyright-company": "LocEssentials",
+      "copyright-message": "All rights reserved."
+    },
+    "es": {
+      "index": "Conoce al equipo",
+      "game": "Juega Adivina quién",
+      "answers": "Clave de respuestas",
+      "submit-page": "Envía tu perfil",
+      "terms": "Términos de servicio",
+      "privacy": "Política de privacidad",
+      "copyright-year": "2026",
+      "copyright-company": "LocEssentials",
+      "copyright-message": "Todos los derechos reservados."
+    }
+  }
+}

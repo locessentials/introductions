@@ -1,0 +1,44 @@
+{
+  "students": [
+    {
+      "id": "sample-001",
+      "submission_date": "2025-01-13",
+      "public_display_consent": true,
+      "language": "en",
+      "full_name": "Sample Student",
+      "preferred_name": "Sam",
+      "pronunciation_file": "/assets/audio/sample-student.mp3",
+      "photo": "/assets/images/sample-student.jpg",
+      "photo_alt": "Sample student photo",
+      "pronouns": "they/them",
+      "languages_spoken": ["English", "Spanish"],
+      "social_media": {
+        "linkedin": "",
+        "twitter": "",
+        "website": ""
+      },
+      "role": "Student",
+      "organization": "LocEssentials",
+      "about": "This is a sample student profile to demonstrate the structure.",
+      "previous_experience": "New to localization",
+      "course": "Loc101: Introduction to Localization",
+      "course_badge": "google-classroom",
+      "section": "2025-1",
+      "enrollment_reason": "To learn about localization",
+      "learning_goals": "Understand the basics of localization",
+      "team": "",
+      "alter_ego": {
+        "name": "The Localizer",
+        "photo": "/assets/images/sample-student-alter-ego.jpg",
+        "photo_alt": "Sample alter ego photo",
+        "photo_credits": "Sample credits",
+        "job_title": "Global Communication Specialist",
+        "organization": "WorldBridge Solutions",
+        "about": "This is a sample alter ego profile.",
+        "subject_fields": "Technology, Education",
+        "hobbies": "Reading, Travel"
+      },
+      "anything_else": ""
+    }
+  ]
+}
